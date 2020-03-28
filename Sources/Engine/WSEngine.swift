@@ -48,7 +48,7 @@ FrameCollectorDelegate, HTTPHandlerDelegate {
         self.delegate = delegate
     }
     
-    public func start(request: URLRequest) {
+    public func start(request: URLRequest, maximumLength: Int) {
         mutex.wait()
         let isConnected = canSend
         mutex.signal()

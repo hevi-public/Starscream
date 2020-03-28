@@ -42,7 +42,7 @@ public struct WSError: Error {
 }
 
 public protocol WebSocketClient: class {
-    func connect()
+    func connect(maximumLength: Int)
     func disconnect(closeCode: UInt16)
     func write(string: String, completion: (() -> ())?)
     func write(stringData: Data, completion: (() -> ())?)
@@ -132,9 +132,9 @@ open class WebSocket: WebSocketClient, EngineDelegate {
         }
     }
     
-    public func connect() {
+    public func connect(maximumLength: Int) {
         engine.register(delegate: self)
-        engine.start(request: request)
+        engine.start(request: request, maximumLength: maximumLength)
     }
     
     public func disconnect(closeCode: UInt16 = CloseCode.normal.rawValue) {
