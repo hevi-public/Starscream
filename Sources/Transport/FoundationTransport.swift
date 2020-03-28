@@ -29,6 +29,7 @@ public enum FoundationTransportError: Error {
 }
 
 public class FoundationTransport: NSObject, Transport, StreamDelegate {
+    
     private weak var delegate: TransportEventClient?
     private let workQueue = DispatchQueue(label: "com.vluxe.starscream.websocket", attributes: [])
     private var inputStream: InputStream?
@@ -47,7 +48,7 @@ public class FoundationTransport: NSObject, Transport, StreamDelegate {
         onConnect = streamConfiguration
     }
     
-     public func connect(url: URL, timeout: Double = 10, certificatePinning: CertificatePinning? = nil) {
+     public func connect(url: URL, timeout: Double = 10, maximumLength: Int = 4096, certificatePinning: CertificatePinning? = nil) {
         guard let parts = url.getParts() else {
             delegate?.connectionChanged(state: .failed(FoundationTransportError.invalidRequest))
             return

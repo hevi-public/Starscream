@@ -64,7 +64,8 @@ FrameCollectorDelegate, HTTPHandlerDelegate {
         guard let url = request.url else {
             return
         }
-        transport.connect(url: url, timeout: request.timeoutInterval, certificatePinning: certPinner)
+        let maximumLength = Int(request.value(forHTTPHeaderField: "Starscream-maximum-length") ?? "4096") ?? 4096
+        transport.connect(url: url, timeout: request.timeoutInterval, maximumLength: maximumLength, certificatePinning: certPinner)
     }
     
     public func stop(closeCode: UInt16 = CloseCode.normal.rawValue) {
