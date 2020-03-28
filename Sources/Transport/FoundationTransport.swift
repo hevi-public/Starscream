@@ -48,7 +48,7 @@ public class FoundationTransport: NSObject, Transport, StreamDelegate {
         onConnect = streamConfiguration
     }
     
-     public func connect(url: URL, timeout: Double = 10, maximumLength: Int = 4096, certificatePinning: CertificatePinning? = nil) {
+     public func connect(url: URL, timeout: Double = 10, maximumLength: Int, certificatePinning: CertificatePinning? = nil) {
         guard let parts = url.getParts() else {
             delegate?.connectionChanged(state: .failed(FoundationTransportError.invalidRequest))
             return
@@ -153,7 +153,7 @@ public class FoundationTransport: NSObject, Transport, StreamDelegate {
         guard let stream = inputStream else {
             return
         }
-        let maxBuffer = 4096
+        let maxBuffer = 1000000
         let buf = NSMutableData(capacity: maxBuffer)
         let buffer = UnsafeMutableRawPointer(mutating: buf!.bytes).assumingMemoryBound(to: UInt8.self)
         let length = stream.read(buffer, maxLength: maxBuffer)

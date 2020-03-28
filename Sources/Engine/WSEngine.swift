@@ -64,7 +64,7 @@ FrameCollectorDelegate, HTTPHandlerDelegate {
         guard let url = request.url else {
             return
         }
-        let maximumLength = Int(request.value(forHTTPHeaderField: "Starscream-maximum-length") ?? "4096") ?? 4096
+        let maximumLength = Int(request.value(forHTTPHeaderField: "Starscream-maximum-length") ?? "1000000") ?? 1000000
         transport.connect(url: url, timeout: request.timeoutInterval, maximumLength: maximumLength, certificatePinning: certPinner)
     }
     
