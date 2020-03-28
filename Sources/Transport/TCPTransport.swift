@@ -35,7 +35,7 @@ public class TCPTransport: Transport {
     private weak var delegate: TransportEventClient?
     private var isRunning = false
     private var isTLS = false
-    private var maximumLength: Int = 4096
+    private var maximumLength: Int = 2000000
     
     public var usingTLS: Bool {
         return self.isTLS
@@ -50,7 +50,7 @@ public class TCPTransport: Transport {
         //normal connection, will use the "connect" method below
     }
     
-    public func connect(url: URL, timeout: Double = 10, maximumLength: Int = 4096, certificatePinning: CertificatePinning? = nil) {
+    public func connect(url: URL, timeout: Double = 10, maximumLength: Int, certificatePinning: CertificatePinning? = nil) {
         guard let parts = url.getParts() else {
             delegate?.connectionChanged(state: .failed(TCPTransportError.invalidRequest))
             return
